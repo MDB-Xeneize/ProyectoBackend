@@ -35,10 +35,11 @@ function login(req, res) {
             const iguales = bcrypt.compareSync(password, result.detail.password);
             if (iguales) {
                 let user = {
+                    permisos:result.detail.permisos,
                     nickname: result.detail.nickname,
                     email: result.detail.email,
                     rol: result.detail.rol,
-                    rol_id: result.detail.id_usuario
+                    rol_id: result.detail.id_usuario+33
                 }
                 //JSON WEB TOKEN
                 // devolvemos un json en forma de token (que basicamente es un string cifrado)

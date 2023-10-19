@@ -30,6 +30,7 @@ usuario_db.create = function (usuario, funcallback) {
     const consulta = "INSERT INTO usuario (rol, permisos, password, nickname, email) VALUES (?,?,?,?,?);";
     //params = [usuario.mail, usuario.nickname, claveCifrada, usuario.persona];
     const params = [usuario.rol, parseInt(usuario.permisos), claveCifrada, usuario.nickname, usuario.email];
+    console.log(params)
     connection.query(consulta, params, (err, detail_bd) => {
         if (err) {
 

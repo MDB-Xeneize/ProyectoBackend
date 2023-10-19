@@ -105,16 +105,28 @@ inOut_db.create = function (registro, funcallback) {
                 }
             } else {
                 const id_viaje = detail_bd.insertId;
-                funcallback(undefined, {
-                    mensaje: "se registro " + registro.nombre+" con ID "+ id_viaje,
-                    detalle: detail_bd
-               });
+                const token = req.headers["authorization"]
+                var tokenDecoded = jwt_decode(result.body.token)
+                id_usuario= tokenDecoded.rol_id-33
+                // Realizar el insert en la tabla "gestiona"
+                consulta = "INSERT INTO gestiona (id_viaje, id_usuario) VALUES (?, ?);";
+                params = [id_viaje, registro.id_usuario];
+                connection.query(consulta, params, (err, gestionaResult) => {
+                    if (err) {
+                        funcallback({
+                            mensaje: "error al crear el registro en la tabla gestiona",
+                            detalle: err
+                        });
+                    } else {
+                        funcallback(undefined, {
+                            mensaje: "se registro " + registro.nombre+" con ID "+ id_viaje,
+                            detalle: detail_bd
+                        });
+                    }
+                });
             }
         });
-
     });
-    
-    
 }
 
 inOut_db.modificar=function actualizarRegistros(registroPut, idViajePut, callback) {
@@ -320,4 +332,110 @@ inOut_db.borrar = function (id_viaje_borrar,id_tipo_borrar,seleccionJSON , funCa
 // }
 
 
+
+inOut_db.create = function (registro, funcallback) {
+    consulta ="insert into tipo_viaje (carga,nombre) values (?,?);";
+    params = [registro.carga,registro.nombre];
+    
+    connection.query(consulta, params, (err, result) => {
+        if (err) {
+
+            return connection.rollback(function() {
+                throw err;
+              });
+    
+        }
+        const id_tipo = result.insertId;
+    
+        consulta = "INSERT INTO viaje (destino, fecha, peso_total, origen, hora, id_chofer, id_vehiculo, id_tipo) VALUES (?,?,?,?,?,?,?,?);";
+        params = [registro.destino, registro.fecha, parseInt(registro.peso_total) , registro.origen, registro.hora , parseInt(registro.id_chofer) ,parseInt(registro.id_vehiculo), parseInt(id_tipo) ];
+        
+        connection.query(consulta, params, (err, detail_bd) => {
+            if (err) {
+    
+                if (err.code == "ER_DUP_ENTRY") {
+                    funcallback({
+                        mensaje: "registro ya existente",
+                        detalle: err
+                    });
+                } else {
+                    funcallback({
+                        mensaje: "error en la DB",
+                        detalle: err
+                    });
+                }
+            } else {
+                const id_viaje = detail_bd.insertId;
+                funcallback(undefined, {
+                    mensaje: "se registro " + registro.nombre+" con ID "+ id_viaje,
+                    detalle: detail_bd
+               });
+            }
+        });
+
+    });
+    
+    
+}
+
+
+// inOut_db.create = function (registro, funcallback) {
+//     consulta ="insert into tipo_viaje (carga,nombre) values (?,?);";
+//     params = [registro.carga,registro.nombre];
+    
+//     connection.query(consulta, params, (err, result) => {
+//         if (err) {
+
+//             return connection.rollback(function() {
+//                 throw err;
+//               });
+    
+//         }
+//         const id_tipo = result.insertId;
+    
+//         consulta = "INSERT INTO viaje (destino, fecha, peso_total, origen, hora, id_chofer, id_vehiculo, id_tipo) VALUES (?,?,?,?,?,?,?,?);";
+//         params = [registro.destino, registro.fecha, parseInt(registro.peso_total) , registro.origen, registro.hora , parseInt(registro.id_chofer) ,parseInt(registro.id_vehiculo), parseInt(id_tipo) ];
+        
+//         connection.query(consulta, params, (err, detail_bd) => {
+//             if (err) {
+    
+//                 if (err.code == "ER_DUP_ENTRY") {
+//                     funcallback({
+//                         mensaje: "registro ya existente",
+//                         detalle: err
+//                     });
+//                 } else {
+//                     funcallback({
+//                         mensaje: "error en la DB",
+//                         detalle: err
+//                     });
+//                 }
+//             } else {
+//                 const id_viaje = detail_bd.insertId;
+//                 const token = req.headers["authorization"]
+//                 var tokenDecoded = jwt_decode(result.body.token)
+//                 id_usuario= tokenDecoded.rol_id-33
+//                 // Realizar el insert en la tabla "gestiona"
+//                 consulta = "INSERT INTO gestiona (id_viaje, id_usuario) VALUES (?, ?);";
+//                 params = [id_viaje, registro.id_usuario];
+//                 connection.query(consulta, params, (err, gestionaResult) => {
+//                     if (err) {
+//                         funcallback({
+//                             mensaje: "error al crear el registro en la tabla gestiona",
+//                             detalle: err
+//                         });
+//                     } else {
+//                         funcallback(undefined, {
+//                             mensaje: "se registro " + registro.nombre+" con ID "+ id_viaje,
+//                             detalle: detail_bd
+//                         });
+//                     }
+//                 });
+//             }
+//         });
+//     });
+// }
+
 module.exports = inOut_db;
+
+

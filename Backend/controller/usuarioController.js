@@ -15,7 +15,7 @@ const auth = require("config/auth.js");
 // -------------------------------------------------------- 
 
 app.get('/', auth.verificarToken, getAll);
-app.post('/',auth.verificarToken,  createUser);
+app.post('/',auth.verificarToken,  createUser);//
 app.put('/:id_usuario',auth.verificarToken, updateUser);
 app.delete('/:id_usuario',auth.verificarToken, deleteUser);
 

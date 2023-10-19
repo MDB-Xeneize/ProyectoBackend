@@ -8,12 +8,13 @@ app.use(express.urlencoded({ extended: true }));
 // Reemplaza "model/mantenimiento.js" con la ubicación correcta de tu módulo de base de datos para la tabla MANTENIMIENTO
 var mantenimiento_db = require("model/mantenimiento.js");
 
+const auth = require("config/auth.js");
 // Rutas de escucha (endpoints) disponibles para MANTENIMIENTO
-app.get('/', getAllMantenimientos);
-app.post('/', crearMantenimiento);
-app.put('/:id_mantenimiento', actualizarMantenimiento);
-app.delete('/:id_mantenimiento', borrarMantenimiento);
-app.get('/:id_mantenimiento', getMantenimientoById);
+app.get('/', auth.verificarToken, getAllMantenimientos);
+app.post('/', auth.verificarToken, crearMantenimiento);
+app.put('/:id_mantenimiento', auth.verificarToken, actualizarMantenimiento);
+app.delete('/:id_mantenimiento', auth.verificarToken, borrarMantenimiento);
+app.get('/:id_mantenimiento', auth.verificarToken, getMantenimientoById);
 
 // Funciones utilizadas en los endpoints
 

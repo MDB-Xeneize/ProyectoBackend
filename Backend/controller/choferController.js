@@ -13,8 +13,8 @@ app.get('/', auth.verificarToken, getAll);
 app.post('/', auth.verificarToken, create);
 app.put('/:id_chofer', auth.verificarToken, update);
 app.delete('/:id_chofer', auth.verificarToken, deleteChofer);
-app.get('/:dni', getByDNI);
-app.get('/usuario/:dni', getUserByChofer);
+app.get('/:dni', auth.verificarToken, getByDNI);
+app.get('/usuario/:dni', auth.verificarToken, getUserByChofer);
 
 // Funciones utilizadas en endpoints
 

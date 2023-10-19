@@ -10,10 +10,10 @@ const vehiculo_db = require("model/vehiculo.js");
 const auth = require("config/auth.js");
 // Rutas
 app.get('/', auth.verificarToken, getAll);
-app.post('/', create);
-app.put('/:id_vehiculo', update);
-app.delete('/:id_vehiculo', deleteVehiculo);
-app.get('/:id_vehiculo', getBymatricula);
+app.post('/', auth.verificarToken, create);
+app.put('/:id_vehiculo', auth.verificarToken, update);
+app.delete('/:id_vehiculo', auth.verificarToken, deleteVehiculo);
+app.get('/:id_vehiculo', auth.verificarToken, getBymatricula);
 
 // Funciones utilizadas en endpoints
 
@@ -40,6 +40,7 @@ function create(req, res) {
 
 function update(req, res) {
     let vehiculo = req.body;
+    console.log(vehiculo)
     let id_vehiculo = req.params.id_vehiculo;
     vehiculo_db.update(vehiculo, id_vehiculo, (err, resultado) => {
         if (err) {
