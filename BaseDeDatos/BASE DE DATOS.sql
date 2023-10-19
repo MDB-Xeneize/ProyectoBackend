@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `bancked`.`usuario` (
   `permisos` INT(1) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `nickname` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(30) NOT NULL,
+  `email` VARCHAR(40) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE INDEX `id_usuario` (`id_usuario` ASC) VISIBLE,
   UNIQUE INDEX `nickname` (`nickname` ASC) VISIBLE)
