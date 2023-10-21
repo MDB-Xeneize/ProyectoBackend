@@ -103,6 +103,7 @@ DEFAULT CHARACTER SET = latin1;
 CREATE TABLE IF NOT EXISTS `bancked`.`gestiona` (
   `id_viaje` INT(11) NOT NULL,
   `id_usuario` INT(11) NOT NULL,
+  `gestiona` VARCHAR(10),
   PRIMARY KEY (`id_viaje`, `id_usuario`),
   INDEX `id_usuario` (`id_usuario` ASC) VISIBLE,
   CONSTRAINT `gestiona_ibfk_1`
