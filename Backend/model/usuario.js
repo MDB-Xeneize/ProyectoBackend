@@ -114,8 +114,9 @@ usuario_db.update = function (datos_usuario, id_usaurio, funcallback) {
 // usuarioController --> app.delete('/:id_usuario', deleteUser);
 usuario_db.borrar = function (id_usuario, funCallback) {
     consulta = "DELETE FROM usuario WHERE id_usuario = ?";
-    console.log(id_usuario)
-    connection.query(consulta, id_usuario, (err, result) => {
+    const id_usaurio = parseInt(id_usuario)
+    console.log(id_usuario,typeof(id_usuario),'aqui')
+    connection.query(consulta, parseInt(id_usuario), (err, result) => {
         if (err) {
             funCallback({ menssage: err.code, detail: err });//, undefined
 
@@ -153,6 +154,31 @@ usuario_db.findByNickname = function (nickname, funCallback) {
                 funCallback(undefined, {
                     message: `Usuario encontrado`,
                     detail: result[0]
+                });
+            } 
+            else {
+                funCallback({
+                    message: "No existe un usuario que coincida con el criterio de busqueda",
+                    detail: result
+                });
+            }
+        }
+    });
+}
+usuario_db.findIdUsuarioByNickname = function (nickname, funCallback) {
+    var consulta = 'SELECT id_usuario FROM usuario WHERE nickname = ?';  
+    console.log(nickname) 
+    // var consulta = 'SELECT usuario.*, rol.nombre FROM usuario INNER JOIN rol ON usuario.rol_id = rol.rol_id AND usuario.nickname = ?';
+    connection.query(consulta, nickname, function (err, result) {
+        if (err) {
+            funCallback(err);
+            return;
+        } else {
+
+            if (result.length > 0) {
+                funCallback(undefined, {
+                    message: `Usuario encontrado`,
+                    detail: result
                 });
             } 
             else {

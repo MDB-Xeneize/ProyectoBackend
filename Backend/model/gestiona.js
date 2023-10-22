@@ -46,9 +46,8 @@ gestiona_db.createGestiona = function (datos, funCallback) {
 
 // R = READ
 gestiona_db.getAllGestiona = function (funCallback) {
-    const consulta = 'SELECT gestiona.*, usuario.nickname AS usuario_nickname, viaje.destino AS viaje_destino, viaje.carga AS viaje_carga FROM gestiona ' +
-                     'INNER JOIN usuario ON gestiona.id_usuario = usuario.id_usuario ' +
-                     'INNER JOIN viaje ON gestiona.id_viaje = viaje.id_viaje';
+    const consulta = 'SELECT  usuario.nickname FROM gestiona INNER JOIN usuario ON gestiona.id_usuario=usuario.id_usuario;' 
+                     
     connection.query(consulta, (err, rows) => {
         if (err) {
             funCallback({
@@ -142,6 +141,33 @@ gestiona_db.getGestiona = function (id_viaje, id_usuario, funCallback) {
         }
     });
 }
+
+// Obtener gestión por ID de viaje e ID de usuario
+gestiona_db.getGestionaViaje = function (id_viaje, funCallback) {
+    const consulta = 'SELECT  usuario.nickname FROM gestiona INNER JOIN usuario ON gestiona.id_usuario=usuario.id_usuario WHERE id_viaje=?;' 
+
+    const params = id_viaje;
+console.log(id_viaje)
+    connection.query(consulta, params, (err, result) => {
+        if (err) {
+            funCallback({
+                message: "Ha ocurrido algún error inesperado al buscar la gestión",
+                detail: err
+            });
+        } else if (result.length === 0) {
+            funCallback(undefined, {
+                message: `No se encontró una gestión con el ID de viaje "${id_viaje}"`,
+                detail: result
+            });
+        } else {
+            funCallback(undefined, {
+                message: `Los datos de la gestión con ID de viaje "${id_viaje}"`,
+                detail: result
+            });
+        }
+    });
+}
+
 
 // Exportar el objeto gestiona_db para que Node.js lo haga público y pueda utilizarse desde otros módulos
 module.exports = gestiona_db;

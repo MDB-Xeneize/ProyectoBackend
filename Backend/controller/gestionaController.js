@@ -14,6 +14,7 @@ app.post('/', createGestiona);
 app.put('/:id_viaje/:id_usuario', updateGestiona);
 app.delete('/:id_viaje/:id_usuario', deleteGestiona);
 app.get('/:id_viaje/:id_usuario', getGestiona);
+app.get('/viaje/usuario/:id_viaje', getGestionaViaje);
 
 // Funciones utilizadas en endpoints
 
@@ -71,6 +72,19 @@ function getGestiona(req, res) {
     let id_viaje = req.params.id_viaje;
     let id_usuario = req.params.id_usuario;
     gestiona_db.getGestiona(id_viaje, id_usuario, (err, resultModel) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.send(resultModel);
+        }
+    });
+}
+
+
+function getGestionaViaje(req, res) {
+    let id_viaje = req.params.id_viaje;
+    console.log(id_viaje)
+    gestiona_db.getGestionaViaje(id_viaje,(err, resultModel) => {
         if (err) {
             res.status(500).send(err);
         } else {

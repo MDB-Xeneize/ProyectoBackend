@@ -54,7 +54,7 @@ app.get('/agregar/vehiculo', auth.verificarToken, (req, res) => {
     });
 });
 
-app.post('/', auth.verificarToken, (req, res) => {
+app.post('/', auth.verificarToken, (req, res) => {   //
     // const token = req.headers["authorization"];
     // var tokenDecoded = jwt_decode(token);
     // id_usuario= tokenDecoded.rol_id;
