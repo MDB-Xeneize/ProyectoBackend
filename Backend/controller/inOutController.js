@@ -86,7 +86,7 @@ app.put('/:id_viaje' , auth.verificarToken, (req, res) => {
 });
 ///
 
-app.delete('/:id_viaje/:id_tipo/:seleccion' , auth.verificarToken, (req, res) => {
+app.delete('/:id_viaje/:id_tipo/:seleccion', auth.verificarToken , (req, res) => {//, auth.verificarToken
     const id_viaje_borrar = req.params.id_viaje;
     const id_tipo_borrar = req.params.id_tipo;
     const seleccion = req.params.seleccion;
