@@ -5,7 +5,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Reemplaza "model/gestiona.js" con la ubicación correcta de tu módulo de base de datos para la tabla GESTIONA
 const gestiona_db = require("model/gestiona.js");
 
 // Rutas
