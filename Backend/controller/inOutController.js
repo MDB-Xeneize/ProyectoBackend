@@ -60,7 +60,6 @@ app.post('/', auth.verificarToken, (req, res) => {   //
     // id_usuario= tokenDecoded.rol_id;
 
     let registro = req.body;
-    console.log(registro)
     inOutDb.create(registro,(err, resultado) => {
         if (err) {
             res.status(500).send(err);
@@ -92,7 +91,6 @@ app.delete('/:id_viaje/:id_tipo/:seleccion', auth.verificarToken , (req, res) =>
     const seleccion = req.params.seleccion;
     const seleccionDecodificada = decodeURIComponent(seleccion);
     const seleccionJSON = JSON.parse(seleccionDecodificada);
-    console.log(req.params.id_viaje,req.params.id_tipo,seleccionJSON);
     inOutDb.borrar(id_viaje_borrar,id_tipo_borrar,seleccionJSON, (err ,resultado) => {
         if (err){
             res.status(500).send(err);

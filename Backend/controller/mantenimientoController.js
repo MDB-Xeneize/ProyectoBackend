@@ -30,7 +30,6 @@ function getAllMantenimientos(req, res) {
 
 function crearMantenimiento(req, res) {
     let mantenimiento = req.body;
-    console.log(mantenimiento);
     mantenimiento_db.crearMantenimiento(mantenimiento, (err, resultado) => {
         if (err) {
             res.status(500).send(err);
@@ -43,7 +42,6 @@ function crearMantenimiento(req, res) {
 function actualizarMantenimiento(req, res) {
     let mantenimiento = req.body;
     let id_mantenimiento = req.params.id_mantenimiento;
-    console.log(mantenimiento,id_mantenimiento);
     mantenimiento_db.actualizarMantenimiento(mantenimiento, id_mantenimiento, (err, resultado) => {
         if (err) {
             res.status(500).send(err);
@@ -55,7 +53,6 @@ function actualizarMantenimiento(req, res) {
 
 function borrarMantenimiento(req, res) {
     let id_mantenimiento = req.params.id_mantenimiento;
-    console.log(id_mantenimiento);
     mantenimiento_db.borrarMantenimiento(id_mantenimiento, (err, result_model) => {
         if (err) {
             res.status(500).send(err);
@@ -80,5 +77,5 @@ function getMantenimientoById(req, res) {
     });
 }
 
-// Exportar la aplicación Express
+
 module.exports = app;

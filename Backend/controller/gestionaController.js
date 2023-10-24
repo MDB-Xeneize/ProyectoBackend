@@ -82,7 +82,6 @@ function getGestiona(req, res) {
 
 function getGestionaViaje(req, res) {
     let id_viaje = req.params.id_viaje;
-    console.log(id_viaje)
     gestiona_db.getGestionaViaje(id_viaje,(err, resultModel) => {
         if (err) {
             res.status(500).send(err);

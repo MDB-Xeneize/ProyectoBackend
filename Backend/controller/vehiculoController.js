@@ -40,7 +40,6 @@ function create(req, res) {
 
 function update(req, res) {
     let vehiculo = req.body;
-    console.log(vehiculo)
     let id_vehiculo = req.params.id_vehiculo;
     vehiculo_db.update(vehiculo, id_vehiculo, (err, resultado) => {
         if (err) {
@@ -53,7 +52,6 @@ function update(req, res) {
 
 function deleteVehiculo(req, res) {
     let id_vehiculo = parseInt(req.params.id_vehiculo);
-    console.log(id_vehiculo,'aqui')
     vehiculo_db.deleteVehiculo(id_vehiculo, (err, resultModel) => {
         if (err) {
 

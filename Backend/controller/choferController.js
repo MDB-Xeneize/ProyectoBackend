@@ -54,7 +54,6 @@ function update(req, res) {
 
 function deleteChofer(req, res) {
     let id_chofer = parseInt(req.params.id_chofer);
-    console.log(id_chofer);
     chofer_db.deleteChofer(id_chofer, (err, resultModel) => {
         if (err) {
             res.status(500).send(err);
@@ -88,5 +87,6 @@ function getByDNI(req, res) {
         }
     });
 }
+
 
 module.exports = app;

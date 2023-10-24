@@ -1,3 +1,4 @@
+// Rutas de escucha (endpoint) disponibles para USUARIO
 require('rootpath')();
 const express = require('express');
 const app = express();
@@ -10,9 +11,8 @@ const auth = require("config/auth.js");
 
 
 
-// -------------------------------------------------------- 
 // --rutas de escucha (endpoint) dispoibles para USUARIOS-- 
-// -------------------------------------------------------- 
+
 
 app.get('/', auth.verificarToken, getAll);
 app.post('/',auth.verificarToken,  createUser);//
@@ -20,12 +20,8 @@ app.put('/:id_usuario',auth.verificarToken, updateUser);
 app.delete('/:id_usuario',auth.verificarToken, deleteUser);
 
 
-// -------------------------------------------------------- 
 // ---------FUNCIONES UTILIZADAS EN ENDPOINTS ------------- 
-// -------------------------------------------------------- 
 
-//req : datos enviados desde el frontend para que lo utilicemos
-//res : respuesta enviada desde el servidor al frontend
 
 function getAll(req, res) {
     usuarioDb.getAll((err, resultado) => {
@@ -50,8 +46,8 @@ function createUser(req, res) {
 
 
 function updateUser(req, res) {
-    let datos_usuario = req.body; //aquellos datos que quiero reemplazar, modificar, etc 
-    let id_usaurio = req.params.id_usuario //para identificarlo dentro de la base de datos
+    let datos_usuario = req.body; 
+    let id_usaurio = req.params.id_usuario 
     usuarioDb.update(datos_usuario, id_usaurio, (err, resultado) => {
         if (err) {
             res.status(500).send(err);

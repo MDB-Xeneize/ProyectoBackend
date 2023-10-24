@@ -6,9 +6,7 @@ app.use(express.urlencoded({ extended: true }));
 
 var usuarioDb = require("model/usuario.js");
 
-// -------------------------------------------------------- 
 // --rutas de escucha (endpoint) dispoibles para USUARIOS-- 
-// -------------------------------------------------------- 
 
 app.get('/', getAll);
 app.post('/', createUser);
@@ -16,12 +14,8 @@ app.put('/:id_usuario', updateUser);
 app.delete('/:id_usuario', deleteUser);
 
 
-// -------------------------------------------------------- 
 // ---------FUNCIONES UTILIZADAS EN ENDPOINTS ------------- 
-// -------------------------------------------------------- 
 
-//req : datos enviados desde el frontend para que lo utilicemos
-//res : respuesta enviada desde el servidor al frontend
 
 function getAll(req, res) {
     usuarioDb.getAll((err, resultado) => {
@@ -47,8 +41,8 @@ function createUser(req, res) {
 
 
 function updateUser(req, res) {
-    let datos_usuario = req.body; //aquellos datos que quiero reemplazar, modificar, etc 
-    let id_usaurio = req.params.id_usuario //para identificarlo dentro de la base de datos
+    let datos_usuario = req.body; 
+    let id_usaurio = req.params.id_usuario 
     console.log(datos_usuario,id_usaurio);
     usuarioDb.updateUser(datos_usuario, id_usaurio, (err,resultado) => {
         if (err) {

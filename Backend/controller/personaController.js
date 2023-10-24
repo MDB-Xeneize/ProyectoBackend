@@ -1,19 +1,14 @@
+// Rutas de escucha (endpoint) disponibles para PERSONA
 require('rootpath')();
 const express = require('express');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//const router = express.Router();
-
 
 
 var personaDb = require("model/persona.js");
 
-//modifique los endpoint de manera que se ejecute la consulta apropiada en el Model
-//ya que al crear varios endpoint con el metodo GET
-//que requerian parametros me surgio un problema y lo resolvi asi
-
-
+// Rutas
 app.get('/', (req, res) => {
     
     personaDb.getAll((err, resultado) => {
@@ -27,9 +22,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
-
 app.get('/usuario/:persona',(req, res) => {
     
     params = req.params.persona;
@@ -37,16 +29,13 @@ app.get('/usuario/:persona',(req, res) => {
         if (err) {
             res.status(500).send(err);
         } else {
-            res.send(resultado.mensaje);
-            //res.json(resultado);
-           
+            res.send(resultado.mensaje);     
         }
     });
 });
 
 
 app.get('/apellido/:apellido', (req, res) => {
-    console.log("aca");
     params = req.params.apellido;
     personaDb.getByApellido(params,(err, resultado) => {
         if (err) {
@@ -70,21 +59,6 @@ app.get('/dni/:dni', (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-//---------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------
-
-
 app.post('/', (req, res) => {
 
     let persona = req.body;
@@ -92,11 +66,9 @@ app.post('/', (req, res) => {
         if (err) {
             res.status(500).send(err);
         } else {
-            //res.send(rows);
             res.send(resultado);
         }
     });
-
 });
 
 
@@ -129,5 +101,3 @@ app.put('/:dni' , (req, res) => {
 
 
 module.exports = app;
-//module.exports = router;
-

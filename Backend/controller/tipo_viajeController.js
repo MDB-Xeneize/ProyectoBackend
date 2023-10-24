@@ -77,5 +77,4 @@ function getTipoViajeById(req, res) {
     });
 }
 
-// Exportar la aplicación Express
 module.exports = app;

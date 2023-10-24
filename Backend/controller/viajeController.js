@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Reemplaza "model/viaje.js" con la ubicación correcta de tu módulo de base de datos para la tabla VIAJE
+
 var viaje_db = require("model/viaje.js");
 
 // Rutas de escucha (endpoints) disponibles para VIAJE
